@@ -28,32 +28,32 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{route('users.update', $user->id)}}" style="width:100%"
-                              enctype="multipart/form-data">
-                            {{ method_field('PUT') }}
-                            {{ csrf_field() }}
-                            <div class="form-group row">
-                                <label for="avatar"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
+                            <form method="POST" action="{{route('users.update', $user->id)}}" style="width:100%"
+                                  enctype="multipart/form-data">
+                                {{ method_field('PUT') }}
+                                {{ csrf_field() }}
+                                <div class="form-group row">
+                                    <label for="avatar"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Аватар') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="avatar" type="file" name="avatar"
-                                           class="form-control @error('avatar') is-invalid @enderror" accept="image/*"
-                                           onchange="loadAvatar(event)">
+                                    <div class="col-md-6">
+                                        <input id="avatar" type="file" name="avatar"
+                                               class="form-control @error('avatar') is-invalid @enderror" accept="image/*"
+                                               onchange="loadAvatar(event)">
 
-                                    @error('avatar')
-                                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                                    @enderror
-                                    @if (isset($file->name))
-                                    <img id="avatar-img" src="{{ $user->avatar_url ?? asset('storage/' . $file->name) }}"
-                                         alt="Avatar" class="mt-3" width="100">
-                                        <img id="avatar-preview" src="#" alt="Avatar Preview" class="mt-3" width="100" style="display:none">
-                                    @endif
+                                        @error('avatar')
+                                        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+                                        @enderror
+                                        @if (isset($file->name))
+                                            <img id="avatar-img" src="{{ $user->avatar_url ?? asset('storage/' . $file->name) }}"
+                                                 alt="Avatar" class="mt-3" width="100">
+                                            <img id="avatar-preview" src="#" alt="Avatar Preview" class="mt-3" width="100" style="display:none">
+                                        @endif
 
+                                    </div>
                                 </div>
-                            </div>
 
 
 
@@ -124,8 +124,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        {{ __('Список пользователей') }}
-                        <a href="{{ route('create') }}" class="btn btn-primary ml-auto">Создать пользователя</a>
+                        Список пользователей
+                        <a href="{{ route('new-users') }}" class="btn btn-primary ml-auto">Создать пользователя</a>
                     </div>
 
                     <div class="card-body">
@@ -162,5 +162,7 @@
             </div>
         </div>
     </div>
+
+
 
 @endsection

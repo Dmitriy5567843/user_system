@@ -7,26 +7,31 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Requests\User\CreateRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Mail\EmailNotification;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class UserController
 {
 
-    public function create (CreateRequest $request)
+    public function mycontoller (CreateRequest $request)
     {
-        User::create([
-            $request->input('name'),
-            $request->input('email'),
-            $request->input('password'),
-            $request->input('descriptiom'),
-            $request->input('role'),
-
-
-        ]);
+//        User::create([
+//            $request->input('name'),
+//            $request->input('email'),
+//            $request->input('password'),
+//            $request->input('descriptiom'),
+//            $request->input('role'),
+//
+//
+//        ]);
+        $users = User::all();
+        $user = Auth::user();
+        return view('users.new-users',compact('user','users'));
     }
 
     public function index()
@@ -81,8 +86,10 @@ class UserController
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+
         $user->description = $request->input('description');
         $user->save();
+
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time().'_'.$avatar->getClientOriginalName();

@@ -31,4 +31,4 @@ Route::group(['prefix' => 'users'], function () {
     });});
 
 Route::get('/my-profile', [UserController::class, 'myProfile'])->name('my-profile')->middleware('auth');
-Route::get('/create', [UserController::class, 'create'])->name('create');
+Route::get('/new-users', [UserController::class, 'mycontoller'])->name('new-users')->middleware('auth');

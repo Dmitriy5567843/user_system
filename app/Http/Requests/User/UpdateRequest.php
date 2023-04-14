@@ -21,6 +21,7 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'name' => ['string'],
             'image' => ['image|mimes:jpeg,png,jpg,max:2048']
