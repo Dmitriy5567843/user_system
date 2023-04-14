@@ -20,10 +20,15 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
 Route::group(['prefix' => 'users'], function () {
-    Route::get('/{id}', [UserController::class, 'profile'])->name('profile');
     Route::get('/', [UserController::class, 'index'])->name('users.index');
-    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
-});
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/{id}', [UserController::class, 'profile'])->name('profile');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+    });});
+
+Route::get('/my-profile', [UserController::class, 'myProfile'])->name('my-profile')->middleware('auth');
+Route::get('/create', [UserController::class, 'create'])->name('create');

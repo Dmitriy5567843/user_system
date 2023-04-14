@@ -5,6 +5,18 @@
         <div class="card-header">
             User card #{{$user->id}}
         </div>
+        <div class="form-group row">
+            <label for="avatar"
+                   class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
+
+            <div class="col-md-6">
+
+                @if (isset($file->name))
+                    <img id="avatar-img" src="{{ $user->avatar_url ?? asset('storage/' . $file->name) }}"
+                         alt="Avatar" class="mt-3" width="100">
+                @endif
+            </div>
+        </div>
         <div class="card-body">
             <div class="mb-3 row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
@@ -27,10 +39,8 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer text-muted">
-            <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary">Edit</a>
-            <a href="{{route('users.delete', $user->id)}}" class="btn btn-danger" data-method="delete">Delete</a>
-        </div>
     </div>
+
+
 
 @endsection

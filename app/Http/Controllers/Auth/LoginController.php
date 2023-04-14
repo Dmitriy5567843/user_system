@@ -42,6 +42,6 @@ class LoginController extends Controller
     public function logout(\Illuminate\Http\Request $request)
     {
         $this->performLogout($request);
-        return redirect()->route('posts.index');
+        return redirect()->route('users.index');
     }
 }

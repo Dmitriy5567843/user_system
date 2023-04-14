@@ -12,11 +12,19 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/1k3orizp90s2hnyh7e6mjtfnmgyw0afux7zs8uxq88h9qma4/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#description' // ID вашего поля description
+        });
+    </script>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -28,6 +36,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav  me-auto">
                        <li class="nav-item"><a href="{{route('users.index')}}" class="nav-link">Users</a></li>
+                        @if(auth()->user() !== null)
+                            <li class="nav-item"><a href="{{route('my-profile')}}" class="nav-link">Profile</a></li>
+                        @endif
+
 
 
                     </ul>

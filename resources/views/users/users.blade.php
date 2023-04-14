@@ -3,18 +3,34 @@
 @section('content')
     <div class="d-flex justify-content-around align-content-stretch flex-wrap">
     @foreach($users as $user)
-            <a href="{{route('profile', $user->id)}}"  style="margin-right: 5px">
+
+
     <div class="card text-center mb-2" style="width: 33%;">
+
+        <a href="{{route('profile', $user->id)}}"  style="margin-right: 5px">
         <div class="card-header">
           <p> User card id #{{$user->id}}</p>
         </div>
+        </a>
+
+        <div class="col-md-6 d-flex justify-content-center">
+            @if (isset($user->files) && isset($user->files->first()->name))
+                <img id="avatar-img" src="{{ 'storage/' . $user->files->first()->name }}"
+                     alt="Avatar" class="mx-auto align-items-center" width="100">
+            @endif
+        </div>
+
+
+
         <div class="card-body">
+
             <div class="mb-3 row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{$user->name}}">
                 </div>
             </div>
+
 
             <div class="mb-3 row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
@@ -33,7 +49,7 @@
 
         @auth
 
-            @if(auth()->user()->role === 'user')
+            @if(auth()->user()->role === 'admin')
                 <div class="d-flex m-1 justify-content-end card-footer text-muted">
                     <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary" style="margin-right: 5px">Edit</a>
 
@@ -48,7 +64,7 @@
 
 
     </div>
-            </a>
+
     @endforeach
 
     </div>
