@@ -1,21 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <script>
-        function loadAvatar(event) {
-            var avatarImg = document.getElementById('avatar-img');
-            var previewImg = document.getElementById('avatar-preview');
-            previewImg.style.display = "block";
-            previewImg.src = URL.createObjectURL(event.target.files[0]);
-            previewImg.onload = function () {
-                URL.revokeObjectURL(previewImg.src);
-            };
-            avatarImg.style.display = "none";
-        }
-    </script>
 
 
-    <div class="container">
+    <div class="d-flex justify-content-around align-content-stretch flex-nowrap">
+    <div class="container ">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -49,9 +38,8 @@
                                         @if (isset($file->name))
                                             <img id="avatar-img" src="{{ $user->avatar_url ?? asset('storage/' . $file->name) }}"
                                                  alt="Avatar" class="mt-3" width="100">
-                                            <img id="avatar-preview" src="#" alt="Avatar Preview" class="mt-3" width="100" style="display:none">
                                         @endif
-
+                                        <img id="avatar-preview" src="#" alt="Avatar Preview" class="mt-3" width="100" style="display:none">
                                     </div>
                                 </div>
 
@@ -72,6 +60,25 @@
                                     @enderror
                                 </div>
                             </div>
+
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Пароль') }}</label>
+                                    <div class="col-md-6">
+                                        <input id="password" type="text"
+                                               class="form-control @error('password') is-invalid @enderror"
+                                               name="password"
+                                               value="введите новый пароль"
+                                               required autocomplete="name"
+                                               autofocus
+                                               onfocus="this.value=''">
+
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
                             <div class="form-group row">
                                 <label for="email"
@@ -118,12 +125,17 @@
     </div>
 
 
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+@if( $user->role === 'admin')
+    <div class="container w-100" >
+        @if(session('delete_success'))
+            <div class="alert alert-success">
+                {{ session('delete_success') }}
+            </div>
+        @endif
+        <div class="row justify-content-center " >
+            <div class="col-md-8 ">
+                <div class="card ">
+                    <div class="card-header d-flex justify-content-between align-items-center ">
                         Список пользователей
                         <a href="{{ route('new-users') }}" class="btn btn-primary ml-auto">Создать пользователя</a>
                     </div>
@@ -144,23 +156,57 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
-                                    <td>{{ $user->description }}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="3" name="description" readonly>{{ $user->description }}</textarea>
+                                        </div>
+                                    </td>
                                     <td class="text-right">
                                         <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary">Edit</a>
-                                        {{Form::open(['route' => ['users.delete', $user->id], 'method' => 'delete'])}}
-                                        <button type="submit" onclick="confirm('are you sure?')" class="btn btn-danger">
+
+                                        {{ Form::open(['route' => ['users.delete', $user->id], 'method' => 'delete']) }}
+                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this user?');" class="btn btn-danger">
                                             Delete
                                         </button>
-                                        {{Form::close()}}
+                                        {{ Form::close() }}
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-center">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item {{ ($users->currentPage() == 1) ? ' disabled' : '' }}">
+                                        <a class="page-link" href="{{ $users->url(1) }}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    @for ($i = 1; $i <= $users->lastPage(); $i++)
+                                        <li class="page-item {{ ($users->currentPage() == $i) ? ' active' : '' }}">
+                                            <a class="page-link" href="{{ $users->url($i) }}">{{ $i }}</a>
+                                        </li>
+                                    @endfor
+                                    <li class="page-item {{ ($users->currentPage() == $users->lastPage()) ? ' disabled' : '' }}">
+                                        <a class="page-link" href="{{ $users->url($users->currentPage()+1) }}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
+
+    </div>
+
+
+        @endif
     </div>
 
 
