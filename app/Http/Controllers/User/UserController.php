@@ -130,7 +130,7 @@ class UserController
             );
         }
         if ($createUserDTO->getRole() === 'admin' && $currentRole !== 'admin') {
-            Mail::send('role.car', ['user' => $user], function($message) use ($user) {
+            Mail::send('email.role', ['user' => $user], function($message) use ($user) {
                 $message->to($user->email, $user->name);
                 $message->subject('Изменение роли на Admin');
             });
