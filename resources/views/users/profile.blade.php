@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card text-center mx-auto" style="width: 500px;">
+    <div class="card text-center mx-auto" style="width: 800px;">
         <div class="card-header">
-            User card #{{$user->id}}
+            User card #{{$user->name}}
         </div>
         <div class="form-group row">
             <label for="avatar"
@@ -36,6 +36,12 @@
                 <label for="staticEmail" class="col-sm-2 col-form-label">Role</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{$user->role}}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{!!htmlspecialchars_decode($user->description  )!!}">
                 </div>
             </div>
         </div>

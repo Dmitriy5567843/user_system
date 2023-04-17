@@ -21,8 +21,15 @@ class CreateRequest extends FormRequest
      */
     public function rules(): array
     {
+
+
         return [
-            'name' => ['string'],
+            'name' => ['required' ,'max:255','unique:users,name'],
+            'email' => ['required','email','unique:users,email', 'min:6','max:255'],
+            'description' => ['max:255'],
+            'password' => ['required','min:6', 'max:20' ],
+            'role' => ['required','in:admin,user'],
+            'image' => ['image','mimes:jpeg,png,jpg','max:2048']
         ];
     }
 }

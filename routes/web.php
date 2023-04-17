@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Category\CategoryController;
-use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,4 +29,5 @@ Route::group(['prefix' => 'users'], function () {
     });});
 
 Route::get('/my-profile', [UserController::class, 'myProfile'])->name('my-profile')->middleware('auth');
-Route::get('/new-users', [UserController::class, 'mycontoller'])->name('new-users')->middleware('auth');
+Route::get('/new-users', [UserController::class, 'mycontoller'])->name('new-users');
+Route::post('/new-users-create', [UserController::class, 'create'])->name('users.create');

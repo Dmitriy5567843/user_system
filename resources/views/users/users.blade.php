@@ -9,7 +9,7 @@
 
         <a href="{{route('profile', $user->id)}}"  style="margin-right: 5px">
         <div class="card-header">
-          <p> User card id #{{$user->id}}</p>
+          <p> User card {{$user->name}}</p>
         </div>
         </a>
 
@@ -54,7 +54,7 @@
                     <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary" style="margin-right: 5px">Edit</a>
 
                     {{Form::open(['route' => ['users.delete', $user->id], 'method' => 'delete'])}}
-                    <button type="submit" onclick="confirm('are you sure?')" class="btn btn-danger">
+                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger">
                         Delete
                     </button>
                     {{Form::close()}}
